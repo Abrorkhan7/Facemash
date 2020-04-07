@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+  <div id="header">
+    <h1><a href="#">FACEMASH</a></h1>
+  </div>
+  <div id="main">
+    <h3>Were we let in for our looks? No. Will we be judged on them? Yes.</h3>
+    <h2>Who's Hotter? Click to Choose.</h2>
+    <table>
+      <tr>
+        <td class="image-box" image-id ="<%=images[0]._id%>"><img src="/uploads/<%=images[0].name %>" /></td>
+        <td>OR</td>
+        <td class="image-box" image-id ="<%=images[1]._id%>"><img src="/uploads/<%=images[1].name %>" /></td>
+      </tr>
+    </table>
+  </div>
+  <div id="footer">
+    <a href="/cats">Cats</a>
+    <a href="#">Girls</a>
+    <a href="#">Boys</a>
+    <a href="#">Celebrities</a>
+    <a href="#">RANDOM</a>
+    <br />
+    <a href="#">Sign-up/Sign-in</a>
+    <a href="/imageUpload">Add Photos</a>
+    <a href="#">Rankings</a>
+  </div>
+
+  <script src="/jquery.js"></script>
+
+<script>
+  $(document).ready(function () {
+    $('td.image-box img').click(function(e){
+      let th=$(this);
+      let loserBox=th.parent().siblings().filter('.image-box').eq(0);
+
+      $.ajax({
+        url:'/vote',
+        data:{
+          loser:loserBox.attr('image-id'),
+          winner:th.parent().attr('image-id')
+        },
+        type:'POST',
+        success:function(data){
+          if(data.result=='success'){
+            loserBox.find('img').attr('src','/uploads/'+ data.name);
+            loserBox.attr('image-id', data.id);
+          }
+        },
+        error:function(err){
+          console.log('error, while voting');
+        }
+      });
+    }); 
+  });
+</script>
+</body>
+</html>
