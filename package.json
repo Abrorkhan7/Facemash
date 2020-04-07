@@ -15,7 +15,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "watch": "nodemon db"
+    "start": "node db.js"
   },
   "keywords": [],
   "author": "",
