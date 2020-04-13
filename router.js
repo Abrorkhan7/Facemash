@@ -17,8 +17,8 @@ router.get('/imageUpload', uploadController.uploadPage)
 
 //Ranks
 
-//Upload
-router.post('/imageUpload', async (req,res) =>{
+//Upload girls images
+router.post('/girlUpload', async (req,res) =>{
     let uploadedImage
     let uploadPath
 
@@ -31,7 +31,7 @@ router.post('/imageUpload', async (req,res) =>{
 
     uploadedImage = req.files.uploadedImage;
 
-    uploadPath = __dirname + '/public/uploads/' + uploadedImage.name;
+    uploadPath = __dirname + '/public/uploads/girls/' + uploadedImage.name;
 
     uploadedImage.mv(uploadPath, function (err) {
         if (err) {
@@ -47,9 +47,75 @@ router.post('/imageUpload', async (req,res) =>{
         rank:1
     }
     let image = new Image(imageData)
-    image.saveImage()
+    image.saveGirlsImage()
 })
-// "/cats"
+// "/animals"
+router.post('/animalUpload', async (req, res) => {
+    let uploadedImage
+    let uploadPath
+
+    if (!req.files || Object.keys(req.files).length === 0) {
+        res.status(400).send('No files were uploaded.');
+        return;
+    }
+
+    //console.log('req.files >>>', req.files); // eslint-disable-line
+
+    uploadedImage = req.files.uploadedImage;
+
+    uploadPath = __dirname + '/public/uploads/animals/' + uploadedImage.name;
+
+    uploadedImage.mv(uploadPath, function (err) {
+        if (err) {
+            return res.status(500).send(err);
+        }
+
+        res.send('File uploaded to ' + uploadPath + " <br /><a href='/'>Home</a>");
+
+    });
+
+    let imageData = {
+        name: uploadedImage.name,
+        rank: 1
+    }
+    let image = new Image(imageData)
+    image.saveAnimalsImage()
+})
+
+//// Celebrity image upload
+
+router.post('/celebrityUpload', async (req, res) => {
+    let uploadedImage
+    let uploadPath
+
+    if (!req.files || Object.keys(req.files).length === 0) {
+        res.status(400).send('No files were uploaded.');
+        return;
+    }
+
+    //console.log('req.files >>>', req.files); // eslint-disable-line
+
+    uploadedImage = req.files.uploadedImage;
+
+    uploadPath = __dirname + '/public/uploads/celebrities/' + uploadedImage.name;
+
+    uploadedImage.mv(uploadPath, function (err) {
+        if (err) {
+            return res.status(500).send(err);
+        }
+
+        res.send('File uploaded to ' + uploadPath + " <br /><a href='/'>Home</a>");
+
+    });
+
+    let imageData = {
+        name: uploadedImage.name,
+        rank: 1
+    }
+    let image = new Image(imageData)
+    image.saveCelebritiesImage()
+})
+
 
 //vote 
 router.post('/vote',(req, res, next)=>{
