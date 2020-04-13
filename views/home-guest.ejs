@@ -15,9 +15,9 @@
     <h2>Who's Hotter? Click to Choose.</h2>
     <table>
       <tr>
-        <td class="image-box" image-id ="<%=images[0]._id%>"><img src="/uploads/<%=images[0].name %>" /></td>
+        <td class="image-box" image-id ="<%=images[0]._id%>"><img src="/uploads/girls/<%=images[0].name %>" /></td>
         <td>OR</td>
-        <td class="image-box" image-id ="<%=images[1]._id%>"><img src="/uploads/<%=images[1].name %>" /></td>
+        <td class="image-box" image-id ="<%=images[1]._id%>"><img src="/uploads/girls/<%=images[1].name %>" /></td>
       </tr>
     </table>
   </div>
@@ -50,7 +50,7 @@
         type:'POST',
         success:function(data){
           if(data.result=='success'){
-            loserBox.find('img').attr('src','/uploads/'+ data.name);
+            loserBox.find('img').attr('src','/uploads/girls/'+ data.name);
             loserBox.attr('image-id', data.id);
           }
         },
